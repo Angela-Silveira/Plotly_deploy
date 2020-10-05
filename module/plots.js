@@ -31,7 +31,8 @@ function buildMetadata(sample) {
         var PANEL = d3.select("#sample-metadata");
 
         PANEL.html("");
-        PANEL.append("h6").text(Object.entries(result))
+        Object.entries(result).forEach(([key, value]) => {
+            PANEL.append("h6").text(`${key.toUpperCase()}: ${value}`);
         //PANEL.append("h6").text(result.id);
         //PANEL.append("h6").text(result.ethnicity);
         //PANEL.append("h6").text(result.gender);
@@ -40,4 +41,6 @@ function buildMetadata(sample) {
         //PANEL.append("h6").text(result.bbtype);
         //PANEL.append("h6").text(result.wfreq);
     });
+
+});
 }
