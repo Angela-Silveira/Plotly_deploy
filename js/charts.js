@@ -29,7 +29,6 @@ function optionChanged(newSample) {
   buildCharts(newSample);
   
 }
-
 // Demographics Panel 
 function buildMetadata(sample) {
   d3.json("samples.json").then((data) => {
@@ -124,12 +123,15 @@ var bubbleLayout = {
 Plotly.newPlot('bubble', bubbleData, bubbleLayout);
 
 //Gauge
-var wash = samples.filter(sampleObj => sampleObj.id == sample);
+var metadata = data.metadata;
+var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
+var result = resultArray[0];
+var wash = metadata.filter(sampleObj => sampleObj.id == sample);
 var washResult = resultArray[0];
-
+console.log(washResult)
   // D2: 3. Use Plotly to plot the data with the layout.
-    var washFreq = washResult.intoFloat(washResult => washResult.wfreq)
-    
+    var washFreq = metadata.map(washResult => washResult.wfreq)
+console.log(washFreq)
     // 4. Create the trace for the gauge chart.
     var gaugeData = [
       {
@@ -145,7 +147,7 @@ var washResult = resultArray[0];
             {range: [0, 2], color: "red"},
             {range: [2, 4], color: "orange"},
             {range: [4, 6], color: "yellow"},
-            {range: [6, 8], color: "light green"},
+            {range: [6, 8], color: "lightgreen"},
             {range: [8, 10], color: "green"}
           ]
         }
@@ -153,7 +155,7 @@ var washResult = resultArray[0];
     ];
     
     // 5. Create the layout for the gauge chart.
-    var gaugeLayout = { width: 200, height: 125, margin: {t: 0, b: 0} 
+    var gaugeLayout = { width: 500, height: 250, margin: {t: 0, b: 0} 
     };
 
     // 6. Use Plotly to plot the gauge data and layout.
