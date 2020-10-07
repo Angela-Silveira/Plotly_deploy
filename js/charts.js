@@ -59,39 +59,41 @@ function buildCharts(sample) {
     // 3. Create a variable that holds the samples array. 
     var samples = data.samples;
     // 4. Create a variable that filters the samples for the object with the desired sample number.
-    var resultArray = samples.filter(sampleObj => sampleObj.id == sample);
+    var samplesResultArray = samples.filter(sampleObj => sampleObj.id == sample);
     //  5. Create a variable that holds the first sample in the array.
-    var result = resultArray[0];
-
+    var samplesResult = samplesResultArray[0];
+//console.log(samplesResultArray);
+//console.log(samplesResult);
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
-    var otuID = samples.map(result => result.otu_ids);
-
-    var otuLabels = samples.map(result => result.otu_labels);
-
-    var sampleValues = samples.map(result => result.sample_values);
-
-console.log(otuID);
-console.log(otuLabels);
-console.log(sampleValues);
+    var otuID = samplesResult.otu_ids;
+    var otuLabels = samplesResult.otu_labels;
+    var sampleValues = samplesResult.sample_values;
+//console.log(otuID);
+//console.log(otuLabels);
+//console.log(sampleValues);
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     //  so the otu_ids with the most bacteria are last. 
-    var sortedOTU = otuID.sort((a, b) => b - a).reverse();
-    var yticks = sortedOTU.slice(0, 10);
-console.log(yticks);
+    var top10 = otuID.slice(0,10);
+    var top10flip = top10.sort((a,b) => b.otuID - a.otuID).reverse();
+    var yticks = top10flip.map(i => "OTU " + i);
+console.log(top10);
+console.log(yticks);    
+var top10Values = sampleValues.slice(0,10);
+var top10ValuesFlip = top10Values.sort((a,b) => b.sampleValues - a.sampleValues).reverse();
     // 8. Create the trace for the bar chart. 
     var trace = {
-      x: sampleValues,
+      x: top10ValuesFlip,
       y: yticks, 
       type: 'bar',
       orientation: 'h',
       text: otuLabels
     };
     var barData = [trace];
-
+console.log(barData);
     // 9. Create the layout for the bar chart. 
     var barLayout = {
-      title: "Top 10 Bacteria Cultures Found"
+      title: "Top 10 Bacteria Cultures Found",
     };
 
     // 10. Use Plotly to plot the data with the layout. 
@@ -115,7 +117,7 @@ var bubbleData = [trace];
 var bubbleLayout = {
   title: 'Bacteria Cultures Per Sample',
   showlegend: false,
-  //hovermode='closest',
+  hovermode: 'closest',
   xaxis: otuLabels
 };
 
@@ -123,15 +125,13 @@ var bubbleLayout = {
 Plotly.newPlot('bubble', bubbleData, bubbleLayout);
 
 //Gauge
-var metadata = data.metadata;
-var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
-var result = resultArray[0];
-var wash = metadata.filter(sampleObj => sampleObj.id == sample);
-var washResult = resultArray[0];
-console.log(washResult)
+var wmetadata = data.metadata;
+var washResultArray = wmetadata.filter(sampleObj => sampleObj.id == sample);
+var washResult = washResultArray[0];
+//console.log(washResultArray)
   // D2: 3. Use Plotly to plot the data with the layout.
-    var washFreq = metadata.map(washResult => washResult.wfreq)
-console.log(washFreq)
+    var washFreq = washResult.wfreq;
+//console.log(washFreq)
     // 4. Create the trace for the gauge chart.
     var gaugeData = [
       {
@@ -155,7 +155,7 @@ console.log(washFreq)
     ];
     
     // 5. Create the layout for the gauge chart.
-    var gaugeLayout = { width: 500, height: 250, margin: {t: 0, b: 0} 
+    var gaugeLayout = { width: 400, height: 250, margin: {t: 0, b: 0} 
     };
 
     // 6. Use Plotly to plot the gauge data and layout.
