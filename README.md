@@ -6,5 +6,6 @@ Each volunteer has been assigned an ID number. Using the drop-down menu, volunte
 the volunteer can view the bacteria identification while the bar itself displays the sample value.
 - The third visual is a bubble chart that displays all bacteria identified in their individual sample, with bubble size representing the amount 
 each bacteria type. By hovering over each bubble, volunteers can view the bacteria identification and sample value.
+
 [GitPage](https://angela-silveira.github.io/Plotly_deploy/ "GitPage")
 ### By providing this dashboard for volunteers, volunteers will be made aware of their sample analysis in the event that they are a match for a particularly desirable bacteria strain (in this case, for Improbable Beef's endeavors to develop synthetic beef).
